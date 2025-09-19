@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"net/http"
 )
 
@@ -22,20 +23,19 @@ func (mngr *TSManager) Use(middlewares ...TMiddleware) {
 
 func (mngr *TSManager) With(next http.Handler, middlewares ...TMiddleware) http.Handler {
 
-	n := next
-
-	// for i := len(middlewares) - 1; i >= 0; i-- {
-	// 	middleware := middlewares[i]
-	// 	n = middleware(n)
-	// }
-	// return n
+	h := next
 	for _, middleware := range middlewares {
-		n = middleware(n)
+		h = middleware(h)
 	}
+	return h
 
-	for _, globalMiddleware := range mngr.globalMiddlewares {
-		n = globalMiddleware(n)
+}
+
+func (mngr *TSManager) WrapMux(handler http.Handler) http.Handler {
+	h := handler
+	fmt.Println("GLOBAL_MIDDLEWARE", mngr.globalMiddlewares)
+	for _, middleware := range mngr.globalMiddlewares {
+		h = middleware(h)
 	}
-	return n
-
+	return h
 }
