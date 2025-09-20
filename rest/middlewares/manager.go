@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -33,7 +32,6 @@ func (mngr *TSManager) With(next http.Handler, middlewares ...TMiddleware) http.
 
 func (mngr *TSManager) WrapMux(handler http.Handler) http.Handler {
 	h := handler
-	fmt.Println("GLOBAL_MIDDLEWARE", mngr.globalMiddlewares)
 	for _, middleware := range mngr.globalMiddlewares {
 		h = middleware(h)
 	}

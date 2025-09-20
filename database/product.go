@@ -1,7 +1,5 @@
 package database
 
-import "fmt"
-
 type TSProducts struct {
 	Id          int     `json:"_id"`
 	Title       string  `json:"title"`
@@ -44,13 +42,13 @@ func DeleteProduct(productId int) {
 	var tempProduct []TSProducts
 	for _, product := range products {
 		if productId != product.Id {
-			products = append(tempProduct, product)
+			tempProduct = append(tempProduct, product)
+			products = tempProduct
 		}
 	}
 }
 
 func init() {
-	fmt.Println("Print Init First")
 	var prd1 = TSProducts{
 		Id:          1,
 		Title:       "Orange",

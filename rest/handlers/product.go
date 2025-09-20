@@ -10,10 +10,8 @@ import (
 
 func Product(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w)
-	fmt.Println("R--->", r)
 	idStr := r.PathValue("id")
 	id, err := strconv.Atoi(idStr)
-	fmt.Println("ID--->", id)
 	if err != nil {
 		http.Error(w, "Something went wrong", http.StatusNotFound)
 	}
