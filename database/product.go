@@ -10,7 +10,44 @@ type TSProducts struct {
 	ImgUrl      string  `json:"imageUrl"`
 }
 
-var Products []TSProducts
+var products []TSProducts
+
+func Store(product TSProducts) TSProducts {
+	product.Id = len(products) + 1
+	products = append(products, product)
+	return product
+}
+
+func List() []TSProducts {
+	return products
+}
+
+func Product(productId int) *TSProducts {
+
+	for _, product := range products {
+		if productId == product.Id {
+			return &product
+		}
+	}
+	return nil
+}
+
+func SetProduct(payload TSProducts) {
+	for idx, product := range products {
+		if payload.Id == product.Id {
+			products[idx] = payload
+		}
+	}
+}
+
+func DeleteProduct(productId int) {
+	var tempProduct []TSProducts
+	for _, product := range products {
+		if productId != product.Id {
+			products = append(tempProduct, product)
+		}
+	}
+}
 
 func init() {
 	fmt.Println("Print Init First")
@@ -57,11 +94,11 @@ func init() {
 		Description: "An orange can refer to a fruit, a color, or even the name of a corporation. The sweet orange, Citrus sinensis, is the most common variety of the hybrid fruit, which is known for its juicy pulp and leathery rind. The color orange is named after the fruit and is a mix of yellow and red.",
 		ImgUrl:      "https://media.gettyimages.com/id/185284489/photo/orange.jpg?s=612x612&w=gi&k=20&c=HZYbLyTgUgxD1WE-O-ltBo_Lui6pX6rQLHQJdYdyl_g=",
 	}
-	Products = append(Products, prd1)
-	Products = append(Products, prd2)
-	Products = append(Products, prd3)
-	Products = append(Products, prd4)
-	Products = append(Products, prd5)
-	Products = append(Products, prd6)
+	products = append(products, prd1)
+	products = append(products, prd2)
+	products = append(products, prd3)
+	products = append(products, prd4)
+	products = append(products, prd5)
+	products = append(products, prd6)
 
 }
