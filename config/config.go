@@ -13,9 +13,10 @@ import (
 var configurations TSConfig
 
 type TSConfig struct {
-	Version     string
-	ServiceName string
-	HttpPort    int
+	Version      string
+	ServiceName  string
+	HttpPort     int
+	JwtSecretKey string
 }
 
 func loadConfig() {
@@ -43,11 +44,17 @@ func loadConfig() {
 		fmt.Println("Service Name is required!")
 		os.Exit(1)
 	}
+	accessToken := os.Getenv("JWT_SECRET_KEY")
+	if accessToken == "" {
+		fmt.Println("Access Token Is Required")
+		os.Exit(1)
+	}
 
 	configurations = TSConfig{
-		Version:     version,
-		ServiceName: serviceName,
-		HttpPort:    int(httpPortInt),
+		Version:      version,
+		ServiceName:  serviceName,
+		HttpPort:     int(httpPortInt),
+		JwtSecretKey: accessToken,
 	}
 
 }

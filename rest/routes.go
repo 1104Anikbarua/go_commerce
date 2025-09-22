@@ -14,9 +14,11 @@ func initRoute(mux *http.ServeMux, chain *middleware.TSManager) {
 	mux.Handle("GET /products",
 		chain.With(http.HandlerFunc(handlers.GetProducts)))
 	mux.Handle("POST /products",
-		chain.With(http.HandlerFunc(handlers.AddProducts)))
+		chain.With(http.HandlerFunc(handlers.CreateProduct), middleware.RequireAuth))
 	mux.Handle("GET /products/{id}",
 		chain.With(http.HandlerFunc(handlers.Product)))
 	mux.Handle("PUT /products/{id}", chain.With(http.HandlerFunc(handlers.SetProduct)))
 	mux.Handle("DELETE /products/{id}", chain.With(http.HandlerFunc(handlers.DeleteProduct)))
+	mux.Handle("POST /users", chain.With(http.HandlerFunc(handlers.CreateUser)))
+	mux.Handle("POST /login", chain.With(http.HandlerFunc(handlers.Login)))
 }

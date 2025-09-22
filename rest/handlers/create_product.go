@@ -7,7 +7,8 @@ import (
 	"net/http"
 )
 
-func AddProducts(w http.ResponseWriter, r *http.Request) {
+func CreateProduct(w http.ResponseWriter, r *http.Request) {
+
 	var newProduct database.TSProducts
 
 	decoder := json.NewDecoder(r.Body)
