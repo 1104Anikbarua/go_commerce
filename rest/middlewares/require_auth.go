@@ -1,15 +1,14 @@
-package middleware
+package middlewares
 
 import (
 	"crypto/hmac"
 	"crypto/sha256"
-	"ecommerce/config"
 	"encoding/base64"
 	"net/http"
 	"strings"
 )
 
-func RequireAuth(next http.Handler) http.Handler {
+func (m TSMiddleware) RequireAuth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		payloadToken := r.Header.Get("authorization")
@@ -36,7 +35,7 @@ func RequireAuth(next http.Handler) http.Handler {
 
 		message := tokenHeader + "." + tokenPayload
 		byteArrMessage := []byte(message)
-		oldSecret := []byte(config.GetConfig().JwtSecretKey)
+		oldSecret := []byte(m.cnf.JwtSecretKey)
 		h := hmac.New(sha256.New, oldSecret)
 		h.Write(byteArrMessage)
 		hash := h.Sum(nil)

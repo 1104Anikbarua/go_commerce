@@ -1,4 +1,4 @@
-package handlers
+package product
 
 import (
 	"ecommerce/database"
@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func Product(w http.ResponseWriter, r *http.Request) {
+func (h *TSNewHandler) Product(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w)
 	idStr := r.PathValue("id")
 	id, err := strconv.Atoi(idStr)

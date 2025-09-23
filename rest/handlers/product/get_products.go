@@ -1,4 +1,4 @@
-package handlers
+package product
 
 import (
 	"ecommerce/database"
@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func GetProducts(w http.ResponseWriter, r *http.Request) {
+func (h *TSNewHandler) GetProducts(w http.ResponseWriter, r *http.Request) {
 	utils.SendData(w, database.List(), http.StatusOK)
 
 }
