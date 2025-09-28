@@ -13,13 +13,13 @@ import (
 )
 
 type TSServer struct {
-	cnf            config.TSConfig
+	cnf            *config.TSConfig
 	userHandler    *user.TSNewHandler
 	productHandler *product.TSNewHandler
 	reviewHandler  *review.TSNewHandler
 }
 
-func NewServer(cnf config.TSConfig, userHandler *user.TSNewHandler, productHandler *product.TSNewHandler, reviewHandler *review.TSNewHandler) *TSServer {
+func NewServer(cnf *config.TSConfig, userHandler *user.TSNewHandler, productHandler *product.TSNewHandler, reviewHandler *review.TSNewHandler) *TSServer {
 	return &TSServer{
 		cnf:            cnf,
 		userHandler:    userHandler,

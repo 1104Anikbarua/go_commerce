@@ -10,7 +10,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var configurations TSConfig
+var configurations *TSConfig
 
 type TSConfig struct {
 	Version      string
@@ -50,16 +50,18 @@ func loadConfig() {
 		os.Exit(1)
 	}
 
-	configurations = TSConfig{
+	configurations = &TSConfig{
 		Version:      version,
 		ServiceName:  serviceName,
-		HttpPort:     int(httpPortInt),
+		HttpPort:     int(httpPortInt), //type casting
 		JwtSecretKey: accessToken,
 	}
 
 }
 
-func GetConfig() TSConfig {
-	loadConfig()
+func GetConfig() *TSConfig {
+	if configurations == nil {
+		loadConfig()
+	}
 	return configurations
 }

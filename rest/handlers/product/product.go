@@ -1,7 +1,7 @@
 package product
 
 import (
-	"ecommerce/database"
+	// "ecommerce/database"
 	"ecommerce/utils"
 	"fmt"
 	"net/http"
@@ -21,7 +21,7 @@ func (h *TSNewHandler) Product(w http.ResponseWriter, r *http.Request) {
 	// 		return
 	// 	}
 	// }
-	product := database.Product(id)
+	product, err := h.product.Get(id) //database.Product(id)
 
 	if product == nil {
 		utils.SendError(w, "Data Not Found", http.StatusNotFound)

@@ -1,8 +1,8 @@
 package user
 
 import (
+	// "ecommerce/database"
 	"ecommerce/config"
-	"ecommerce/database"
 	"ecommerce/utils"
 	"encoding/json"
 	"net/http"
@@ -24,7 +24,12 @@ func (h *TSNewHandler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	isUserOk := database.Find(payload.Email, payload.Password)
+	// isUserOk := database.Find(payload.Email, payload.Password)
+	isUserOk, err := h.userRepo.Find(payload.Email, payload.Password)
+	if err != nil {
+		http.Error(w, "Please Send Valid Json", http.StatusNotAcceptable)
+		return
+	}
 	if isUserOk == nil {
 		http.Error(w, "Please Check Email and Password", http.StatusUnauthorized)
 		return
